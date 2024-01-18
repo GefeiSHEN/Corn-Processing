@@ -1,0 +1,631 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     26278,        623]
+NotebookOptionsPosition[     24483,        588]
+NotebookOutlinePosition[     24898,        605]
+CellTagsIndexPosition[     24855,        602]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"cornFiles1", " ", "=", " ", 
+   RowBox[{"FileNames", "[", 
+    RowBox[{"\"\<*.tif\>\"", ",", 
+     RowBox[{
+      RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+      "\"\<cornProject/originalImages\>\""}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"cornImages1", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{"IncludeMetaInformation", "->", "None"}]}], "]"}], "&"}], "/@",
+     "cornFiles1"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9078010496197643`*^9, 3.907801072349847*^9}, {
+   3.907801145037285*^9, 3.90780116582767*^9}, 3.907801209135405*^9, {
+   3.907801242149993*^9, 3.907801301054784*^9}, {3.9078019512566977`*^9, 
+   3.907801952240252*^9}, {3.907802015964518*^9, 3.9078020835322123`*^9}, {
+   3.907802329055355*^9, 3.907802329229027*^9}, {3.907805290518072*^9, 
+   3.907805299194332*^9}, {3.90780679823556*^9, 3.9078068251100473`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"d3e8975b-ff4d-4bef-aa5f-4992ed74e165"],
+
+Cell[CellGroupData[{
+
+Cell["Q1", "Section",
+ CellChangeTimes->{{3.9086482051075087`*^9, 
+  3.9086482111308327`*^9}},ExpressionUUID->"58063364-4f25-455d-b778-\
+b1eb49a3f04c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cornCountGSSS", "[", "img_", " ", "]"}], ":=", " ", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "binarizeImg", ",", " ", "denoisedImg", ",", " ", "cleanedImg", ",", " ",
+       "components"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"binarizeImg", " ", "=", " ", 
+      RowBox[{"Binarize", "[", 
+       RowBox[{"img", ",", " ", "0.15"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"denoisedImg", "=", 
+      RowBox[{"DeleteSmallComponents", "[", "binarizeImg", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"cleanedImg", " ", "=", " ", 
+      RowBox[{"Erosion", "[", 
+       RowBox[{"denoisedImg", ",", " ", 
+        RowBox[{"DiskMatrix", "[", "40", "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"components", "=", 
+      RowBox[{"MorphologicalComponents", "[", "cleanedImg", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Max", "[", "components", "]"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQAWIQ/UF5tW+X7FvHI8vX+oPoNg/jBhCdpJ3bCqKbf+6a
+DKJ/qRZMAdELVh+YBaLjwq/MBtGHP4o9ANGZRRsegehvyyRvdQPpANdZ90A0
+34sfj0D0brMVP0D07U4rhh4g/WEaOw+IXsC7eCuIfvFdZxtY/D7XNRDNeFYa
+TK/f6PEARGdkhIHpGzLPjs4F0jPnMBwH0Y/mSf0G0V5BCmB6RuZFuXlA2ijM
+Ux5EZ9l9VQbRDy+sUQHRZy5pJc0H0ptkDcC0nvzSfBBdELASTOfd2jwXREd9
+3wamP0xtWweiIzevANMlVZdjjeTfOsqYaceDaACjGqEH
+  "],
+ CellLabel->"In[3]:=",ExpressionUUID->"d056e78e-fb6b-4eed-98bb-d9728718e5c7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"cornCountGSSS", "[", "#", "]"}], " ", "&"}], "/@", 
+  "cornImages1"}]], "Input",
+ CellChangeTimes->{{3.907805284380536*^9, 3.907805321591556*^9}, {
+  3.9078066470413303`*^9, 3.907806648997363*^9}, {3.9086702203965883`*^9, 
+  3.9086702217099495`*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"06f7fe47-4e3e-4f44-a624-54558f741f51"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Q2", "Section",
+ CellChangeTimes->{{3.908648321836795*^9, 
+  3.908648322596952*^9}},ExpressionUUID->"13b0aea1-8bd4-4366-a970-\
+31feff139937"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cornCentroidGSSS", "[", "img_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "binarized", ",", "binarized2", ",", "filtered", ",", "max", ",", 
+      "selected", ",", "ms", ",", "centroids", ",", "cleanedImg"}], "}"}], 
+    ",", 
+    RowBox[{
+     RowBox[{"binarized", "=", 
+      RowBox[{"Binarize", "[", "img", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"binarized2", "=", 
+      RowBox[{"DeleteSmallComponents", "[", "binarized", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"cleanedImg", "=", 
+      RowBox[{"Erosion", "[", 
+       RowBox[{"binarized2", ",", 
+        RowBox[{"DiskMatrix", "[", "35", "]"}]}], "]"}]}], ";", "\n", 
+     RowBox[{"cleanedImg", "=", 
+      RowBox[{"Dilation", "[", 
+       RowBox[{"cleanedImg", ",", 
+        RowBox[{"DiskMatrix", "[", "40", "]"}]}], "]"}]}], ";", "\n", 
+     RowBox[{"cleanedImg", "=", 
+      RowBox[{"Erosion", "[", 
+       RowBox[{"cleanedImg", ",", 
+        RowBox[{"DiskMatrix", "[", "40", "]"}]}], "]"}]}], ";", "\n", 
+     RowBox[{"ms", "=", 
+      RowBox[{"ComponentMeasurements", "[", 
+       RowBox[{"cleanedImg", ",", "\"\<Centroid\>\""}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"centroids", "=", 
+      RowBox[{"ms", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "2"}], "]"}], "]"}]}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.9080534281975746`*^9, 3.908053491559759*^9}, {
+   3.9080536543602934`*^9, 3.908053690646653*^9}, {3.908053724884442*^9, 
+   3.9080537586684475`*^9}, {3.9080538732553954`*^9, 
+   3.9080538749393516`*^9}, {3.9080539768032207`*^9, 3.9080539776259823`*^9}, 
+   3.908054043154621*^9, {3.908054252172909*^9, 3.9080543531711326`*^9}, 
+   3.908055597449354*^9, {3.908055997922763*^9, 3.908056021232463*^9}, {
+   3.9080560643063602`*^9, 3.908056072321116*^9}, {3.908056292857687*^9, 
+   3.9080562937364492`*^9}, {3.908056353364399*^9, 3.9080564101872673`*^9}, 
+   3.9080568485264363`*^9, 3.9080575694944043`*^9, 3.90805908789704*^9, {
+   3.9080591780642147`*^9, 3.908059187083766*^9}, 3.908059334593659*^9, {
+   3.908059380153865*^9, 3.9080593972262087`*^9}, 3.9080599973318276`*^9, 
+   3.9080601421110044`*^9, {3.908060461119279*^9, 3.9080604621979055`*^9}, {
+   3.908060534330673*^9, 3.908060537335902*^9}, {3.9080606073893633`*^9, 
+   3.9080606159621143`*^9}, 3.908060650355039*^9, 3.9080608391389036`*^9, 
+   3.9080609079187317`*^9, {3.908060952649105*^9, 3.908060953358876*^9}, {
+   3.9080630065478525`*^9, 3.9080630439731493`*^9}, {3.9080647279226723`*^9, 
+   3.908064733793147*^9}, 3.9080653008992205`*^9, 3.9080653643237114`*^9, {
+   3.9080654065192356`*^9, 3.908065451782977*^9}, 3.908065490673276*^9, 
+   3.908065535548114*^9, {3.90864756944163*^9, 3.9086475763351135`*^9}, 
+   3.908647620136553*^9, {3.9086476643482494`*^9, 3.9086476885050516`*^9}, {
+   3.9086477855428276`*^9, 3.908647792466875*^9}, {3.9086478843500314`*^9, 
+   3.908647907210207*^9}, {3.9086479455425587`*^9, 3.9086479488312745`*^9}, {
+   3.9086485545467443`*^9, 3.9086485548869686`*^9}, {3.9086487082363997`*^9, 
+   3.908648708912437*^9}, {3.908648753413059*^9, 3.908648753638569*^9}, {
+   3.908649005159565*^9, 3.908649012841195*^9}, {3.9086491594786797`*^9, 
+   3.9086491781078515`*^9}, {3.908649291151631*^9, 3.9086492955348787`*^9}, {
+   3.9086702075327306`*^9, 3.908670208079455*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"3e971884-3a75-4494-8a50-68cce3ad567c"],
+
+Cell[BoxData[
+ RowBox[{"centroids", "  ", "=", " ", 
+  RowBox[{"cornCentroidGSSS", "[", 
+   RowBox[{"cornImages1", "[", 
+    RowBox[{"[", "1", "]"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.908648435035137*^9, 3.908648438001157*^9}, {
+  3.9086493762949944`*^9, 3.9086493809398813`*^9}, {3.9086702128184986`*^9, 
+  3.908670213598273*^9}, {3.908670581647934*^9, 3.90867058365158*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"d2dc4758-33df-4b41-9a65-024586444e47"],
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{
+   RowBox[{"cornImages1", "[", 
+    RowBox[{"[", "1", "]"}], "]"}], ",", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{"Red", ",", 
+      RowBox[{"PointSize", "[", "Small", "]"}], ",", 
+      RowBox[{"Point", "/@", "centroids"}]}], "}"}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.908670563806293*^9, 3.9086705970093813`*^9}, {
+  3.9086706510727987`*^9, 3.908670702696876*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"22d839fd-656d-4419-86b1-8511216af505"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cornApexGSSS", "[", "img_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "binarizeImg", ",", "denoisedImg", " ", ",", "cleanedImg", " ", ",", 
+      "ms", ",", "thinned", ",", "ms2", ",", "centroids", ",", "mask", ",", 
+      "coordinates", ",", "validCoordinates", ",", "coordinatesOnly", ",", 
+      "groupedCoordinates", ",", "averageCoordinates", ",", "modifiedGroup", 
+      ",", "restCoordinated", ",", "swappedPoints", ",", 
+      "averageCoordinates2", ",", "xDim", ",", "yDim", ",", "correctedPoints",
+       ",", "averageCoordinates3", ",", "closestCentroid", ",", "maxDistance",
+       ",", "farthestPoint", ",", "farthestPoints"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"binarizeImg", " ", "=", " ", 
+      RowBox[{"Binarize", "[", 
+       RowBox[{"img", ",", " ", "0.15"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"denoisedImg", "=", 
+      RowBox[{"DeleteSmallComponents", "[", "binarizeImg", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"cleanedImg", " ", "=", " ", 
+      RowBox[{"Erosion", "[", 
+       RowBox[{"denoisedImg", ",", " ", 
+        RowBox[{"DiskMatrix", "[", "30", "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"ms", "=", 
+      RowBox[{"ComponentMeasurements", "[", 
+       RowBox[{"cleanedImg", ",", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Centroid\>\"", ",", "\"\<EquivalentDiskRadius\>\"", ",", 
+          "\"\<Label\>\"", ",", "\"\<Mask\>\""}], "}"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"thinned", "=", 
+      RowBox[{"Thinning", "[", "cleanedImg", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"ms2", "=", 
+      RowBox[{"ComponentMeasurements", "[", 
+       RowBox[{"thinned", ",", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Centroid\>\"", ",", "\"\<EquivalentDiskRadius\>\"", ",", 
+          "\"\<Label\>\"", ",", "\"\<Mask\>\""}], "}"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"centroids", "=", 
+      RowBox[{"ms", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "2", ",", "1"}], "]"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"mask", "=", 
+      RowBox[{"ms2", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "2", ",", "4"}], "]"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"coordinates", "=", 
+      RowBox[{"ArrayRules", "[", "mask", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"validCoordinates", "=", 
+      RowBox[{"Cases", "[", 
+       RowBox[{"coordinates", ",", 
+        RowBox[{"HoldPattern", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"_", ",", "_", ",", "_"}], "}"}], "->", 
+          RowBox[{"Except", "[", "0", "]"}]}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"coordinatesOnly", "=", 
+      RowBox[{"validCoordinates", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"groupedCoordinates", "=", 
+      RowBox[{"GatherBy", "[", 
+       RowBox[{"coordinatesOnly", ",", "First"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"farthestPoints", "=", 
+      RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"j", "=", "1"}], ",", 
+       RowBox[{"j", "<=", 
+        RowBox[{"Length", "[", "groupedCoordinates", "]"}]}], ",", 
+       RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"averageCoordinates", "=", 
+         RowBox[{"N", "[", 
+          RowBox[{"Mean", "[", 
+           RowBox[{"groupedCoordinates", "[", 
+            RowBox[{"[", "j", "]"}], "]"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"modifiedGroup", "=", 
+         RowBox[{"Rest", " ", "/@", 
+          RowBox[{"groupedCoordinates", "[", 
+           RowBox[{"[", "j", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"restCoordinated", "=", 
+         RowBox[{"N", "[", 
+          RowBox[{"Rest", "[", "averageCoordinates", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"swappedPoints", "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"#2", ",", "#1"}], "}"}], "&"}], "@@@", 
+          "modifiedGroup"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"averageCoordinates2", "=", 
+         RowBox[{"N", "[", 
+          RowBox[{"Mean", "[", "swappedPoints", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"xDim", ",", "yDim"}], "}"}], "=", 
+         RowBox[{"ImageDimensions", "[", "img", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"correctedPoints", "=", 
+         RowBox[{"swappedPoints", " ", "/.", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"x_", ",", "y_"}], "}"}], ":>", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"yDim", "-", "y"}]}], "}"}]}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"averageCoordinates3", "=", 
+         RowBox[{"N", "[", 
+          RowBox[{"Mean", "[", "correctedPoints", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"closestCentroid", "=", 
+         RowBox[{
+          RowBox[{"Nearest", "[", 
+           RowBox[{"centroids", ",", "averageCoordinates3"}], "]"}], "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"maxDistance", "=", "0"}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"i", "=", "1"}], ",", 
+           RowBox[{"i", "<=", 
+            RowBox[{"Length", "[", "correctedPoints", "]"}]}], ",", 
+           RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"distance", "=", 
+             RowBox[{"EuclideanDistance", "[", 
+              RowBox[{
+               RowBox[{"correctedPoints", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], ",", "closestCentroid"}], 
+              "]"}]}], ";", "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"distance", ">", "maxDistance"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"maxDistance", "=", "distance"}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"farthestPoint", "=", 
+                RowBox[{"correctedPoints", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}]}], ";"}]}], "]"}]}]}], 
+          "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"farthestPoints", ",", "farthestPoint"}], "]"}]}], ";"}]}], 
+      "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", ";", 
+     "\[IndentingNewLine]", "farthestPoints"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.908649418597827*^9, 3.908649420352587*^9}, {
+  3.9086702308856125`*^9, 3.9086702315984025`*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"b7745be6-74a9-42d3-87bf-3ae188929dd9"],
+
+Cell[BoxData[
+ RowBox[{"apex", " ", "=", " ", 
+  RowBox[{"cornApexGSSS", "[", 
+   RowBox[{"cornImages1", "[", 
+    RowBox[{"[", "1", "]"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.9086495105174913`*^9, 3.9086495173415775`*^9}, {
+  3.9086702371914253`*^9, 3.908670237710251*^9}, {3.9086707110800753`*^9, 
+  3.908670712069293*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"d3a1a9ee-9395-48b5-941f-8457fe017c96"],
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{
+   RowBox[{"cornImages1", "[", 
+    RowBox[{"[", "1", "]"}], "]"}], ",", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{"Red", ",", 
+      RowBox[{"PointSize", "[", "Small", "]"}], ",", 
+      RowBox[{"Point", "/@", "apex"}]}], "}"}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.908670717252499*^9, 3.908670717703251*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"8a28721c-801f-4620-a186-c57466a259f4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Q3", "Section",
+ CellChangeTimes->{{3.908657519027951*^9, 
+  3.908657519381158*^9}},ExpressionUUID->"a76d29d8-bff9-4ec0-989b-\
+74f0a7513fa4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cornRedOrWhiteGSSS", "[", " ", "img_", " ", "]"}], ":=", " ", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "binarizeImg", ",", "denoisedImg", ",", "cleanedImg", ",", "ms", ",", 
+      "R", ",", "G", ",", "B", ",", "grayImage", ",", "enhancedWhite", ",", 
+      "enhancedB", ",", "b1", ",", "ee", ",", "centroids", ",", "Hdata", ",", 
+      "blackImage", ",", "whited", ",", "results", ",", "white", ",", 
+      "negate", ",", "red", ",", "whitePositions", ",", "redPositions", ",", 
+      "centroid", ",", "intersect", ",", "intersectRed", ",", "redness"}], 
+     "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"binarizeImg", "=", 
+      RowBox[{"img", "//", "Binarize"}]}], ";", "\n", 
+     RowBox[{"denoisedImg", "=", 
+      RowBox[{"DeleteSmallComponents", "[", "binarizeImg", "]"}]}], ";", "\n", 
+     RowBox[{"cleanedImg", "=", 
+      RowBox[{"Erosion", "[", 
+       RowBox[{"denoisedImg", ",", 
+        RowBox[{"DiskMatrix", "[", "35", "]"}]}], "]"}]}], ";", "\n", 
+     RowBox[{"cleanedImg", "=", 
+      RowBox[{"Dilation", "[", 
+       RowBox[{"cleanedImg", ",", 
+        RowBox[{"DiskMatrix", "[", "40", "]"}]}], "]"}]}], ";", "\n", 
+     RowBox[{"cleanedImg", "=", 
+      RowBox[{"Erosion", "[", 
+       RowBox[{"cleanedImg", ",", 
+        RowBox[{"DiskMatrix", "[", "40", "]"}]}], "]"}]}], ";", "\n", 
+     RowBox[{"ms", "=", 
+      RowBox[{"ComponentMeasurements", "[", 
+       RowBox[{"cleanedImg", ",", "\"\<Centroid\>\""}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"R", ",", "G", ",", "B"}], "}"}], "=", 
+      RowBox[{"ColorSeparate", "[", 
+       RowBox[{"img", ",", "\"\<RGB\>\""}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"grayImage", "=", 
+      RowBox[{"ColorConvert", "[", 
+       RowBox[{"B", ",", "\"\<Grayscale\>\""}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"enhancedWhite", "=", 
+      RowBox[{"ImageAdjust", "[", 
+       RowBox[{"grayImage", ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "0.1", ",", 
+          RowBox[{"{", 
+           RowBox[{"0.8", ",", "1"}], "}"}]}], "}"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"enhancedB", "=", 
+      RowBox[{"Erosion", "[", 
+       RowBox[{"enhancedWhite", ",", "10"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"DeleteSmallComponents", "[", "enhancedB", "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"b1", "=", 
+      RowBox[{"Binarize", "[", "enhancedB", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"b1", "=", 
+      RowBox[{"DeleteSmallComponents", "[", 
+       RowBox[{"b1", ",", "2000"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"ee", "=", 
+      RowBox[{"Dilation", "[", 
+       RowBox[{"b1", ",", "50"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"centroids", "=", 
+      RowBox[{"ms", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Hdata", "=", 
+      RowBox[{"ImageData", "[", "ee", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"blackImage", "=", 
+      RowBox[{"Binarize", "[", 
+       RowBox[{"Image", "[", 
+        RowBox[{"ConstantArray", "[", 
+         RowBox[{"0", ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"ImageDimensions", "[", "img", "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", 
+            RowBox[{
+             RowBox[{"ImageDimensions", "[", "img", "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}], "]"}], "]"}]}],
+      ";", "\[IndentingNewLine]", 
+     RowBox[{"whited", "=", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{"{", 
+        RowBox[{"White", ",", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Disk", "[", 
+            RowBox[{"#", ",", "20"}], "]"}], "&"}], "/@", "centroids"}]}], 
+        "}"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"results", "=", 
+      RowBox[{"Show", "[", 
+       RowBox[{"blackImage", ",", "whited"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"white", "=", 
+      RowBox[{"ImageMultiply", "[", 
+       RowBox[{"ee", ",", "results"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"negate", "=", 
+      RowBox[{"ColorNegate", "[", "white", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"red", "=", 
+      RowBox[{"ImageMultiply", "[", 
+       RowBox[{"negate", ",", "results"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"whitePositions", "=", 
+      RowBox[{"PixelValuePositions", "[", 
+       RowBox[{"white", ",", "1"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"redPositions", "=", 
+      RowBox[{"PixelValuePositions", "[", 
+       RowBox[{"red", ",", "1"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"centroid", "=", 
+      RowBox[{"Round", "[", "centroids", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"intersect", "=", 
+      RowBox[{"Intersection", "[", 
+       RowBox[{"whitePositions", ",", "centroid"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"intersectRed", "=", 
+      RowBox[{"Intersection", "[", 
+       RowBox[{"redPositions", ",", "centroid"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"white", "=", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Append", "[", 
+          RowBox[{"#", ",", "0"}], "]"}], "&"}], ",", "intersect"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"redness", "=", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Append", "[", 
+          RowBox[{"#", ",", "1"}], "]"}], "&"}], ",", "intersectRed"}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Join", "[", 
+      RowBox[{"white", ",", "redness"}], "]"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.908657530905635*^9, 3.9086575309066367`*^9}, 
+   3.9086686988491974`*^9, {3.908668734168739*^9, 3.908669023080776*^9}, 
+   3.9086692130227036`*^9, 3.9086696634019666`*^9, {3.9086700142685604`*^9, 
+   3.908670086995575*^9}, {3.908670138389357*^9, 3.908670167947764*^9}, {
+   3.9086702419657984`*^9, 3.9086702424713535`*^9}, {3.90867083331028*^9, 
+   3.908670842663836*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"af23b8cf-3373-4857-a92f-5a4c42c87c69"],
+
+Cell[BoxData[
+ RowBox[{"redOrWhite", " ", "=", " ", 
+  RowBox[{"cornRedOrWhiteGSSS", "[", 
+   RowBox[{"cornImages1", "[", 
+    RowBox[{"[", "2", "]"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.9086582612148695`*^9, 3.90865827185427*^9}, 
+   3.9086583366150084`*^9, 3.9086686914228067`*^9, {3.908669235406268*^9, 
+   3.9086692405010777`*^9}, {3.9086694808523197`*^9, 
+   3.9086694811123643`*^9}, {3.9086702468915863`*^9, 3.908670247409022*^9}, {
+   3.908670727504524*^9, 3.908670731116593*^9}},
+ CellLabel->"In[25]:=",ExpressionUUID->"ba7be1b9-c83b-40c1-b19c-0179c0672813"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"overlay", "=", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Style", "[", 
+        RowBox[{
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"#", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"#", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", 
+             RowBox[{"#", "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], "]"}], ",", 
+         "White"}], "]"}], "&"}], "/@", "redOrWhite"}], "}"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{"Show", "[", 
+  RowBox[{
+   RowBox[{"cornImages1", "[", 
+    RowBox[{"[", "2", "]"}], "]"}], ",", "overlay"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.9086707346487207`*^9, 3.908670765416812*^9}, 
+   3.9086707996901503`*^9, {3.908670887067136*^9, 3.9086709026344357`*^9}},
+ CellLabel->"In[30]:=",ExpressionUUID->"f67f7d87-eb16-4c12-a455-7e63cb174185"]
+}, Open  ]]
+},
+WindowSize->{1920, 1027},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+CellContext->Notebook,
+FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (June 3, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"70f063ef-01cd-44a4-8bac-e58ba65c689a"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1042, 23, 52, "Input",ExpressionUUID->"d3e8975b-ff4d-4bef-aa5f-4992ed74e165"],
+Cell[CellGroupData[{
+Cell[1625, 47, 151, 3, 67, "Section",ExpressionUUID->"58063364-4f25-455d-b778-b1eb49a3f04c"],
+Cell[1779, 52, 1514, 34, 157, "Input",ExpressionUUID->"d056e78e-fb6b-4eed-98bb-d9728718e5c7"],
+Cell[3296, 88, 375, 8, 30, "Input",ExpressionUUID->"06f7fe47-4e3e-4f44-a624-54558f741f51"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3708, 101, 147, 3, 67, "Section",ExpressionUUID->"13b0aea1-8bd4-4366-a970-31feff139937"],
+Cell[3858, 106, 3486, 64, 178, "Input",ExpressionUUID->"3e971884-3a75-4494-8a50-68cce3ad567c"],
+Cell[7347, 172, 469, 8, 30, "Input",ExpressionUUID->"d2dc4758-33df-4b41-9a65-024586444e47"],
+Cell[7819, 182, 525, 12, 30, "Input",ExpressionUUID->"22d839fd-656d-4419-86b1-8511216af505"],
+Cell[8347, 196, 7118, 165, 787, "Input",ExpressionUUID->"b7745be6-74a9-42d3-87bf-3ae188929dd9"],
+Cell[15468, 363, 416, 8, 30, "Input",ExpressionUUID->"d3a1a9ee-9395-48b5-941f-8457fe017c96"],
+Cell[15887, 373, 467, 11, 30, "Input",ExpressionUUID->"8a28721c-801f-4620-a186-c57466a259f4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16391, 389, 147, 3, 67, "Section",ExpressionUUID->"a76d29d8-bff9-4ec0-989b-74f0a7513fa4"],
+Cell[16541, 394, 6355, 150, 724, "Input",ExpressionUUID->"af23b8cf-3373-4857-a92f-5a4c42c87c69"],
+Cell[22899, 546, 579, 10, 30, "Input",ExpressionUUID->"ba7be1b9-c83b-40c1-b19c-0179c0672813"],
+Cell[23481, 558, 986, 27, 52, "Input",ExpressionUUID->"f67f7d87-eb16-4c12-a455-7e63cb174185"]
+}, Open  ]]
+}
+]
+*)
+
